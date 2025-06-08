@@ -9,7 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # === Source Files === #
 set(SRC_FILES_WITHOUT_MAIN
-    
+    src/linkedlist.hpp
+    src/linkedlist.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES_WITHOUT_MAIN} src/main.cpp)
@@ -36,3 +37,36 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 # === Test Executables === #
+set(PROJECT_CODE_FILES
+    ${SRC_FILES_WITHOUT_MAIN}
+    ${HELPER_FILES}
+)
+
+set(GTEST_FILES_WITHOUT_MAIN
+    gtest/linkedlist_gtests.cpp
+)
+
+# === All Gtests === #
+set(MAPS_AND_LETTERS_GTESTS ${PROJECT_NAME}_gtests)
+set(MAPS_AND_LETTERS_GTEST_FILES
+    gtest/gtestmain.cpp
+    ${GTEST_FILES_WITHOUT_MAIN}
+    ${PROJECT_CODE_FILES}
+)
+
+add_executable(${MAPS_AND_LETTERS_GTESTS} ${MAPS_AND_LETTERS_GTEST_FILES})
+target_link_libraries(${MAPS_AND_LETTERS_GTESTS} gtest gtest_main)
+target_include_directories(${MAPS_AND_LETTERS_GTESTS} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+add_test(NAME maps_and_letters_gtests COMMAND ${MAPS_AND_LETTERS_GTESTS})
+
+# === Linked List Gtests === #
+set(LINKED_LIST_GTESTS linked_list_gtests)
+set(LINKED_LIST_GTEST_FILES
+    gtest/linkedlist_gtests.cpp
+    ${PROJECT_CODE_FILES}
+)
+
+add_executable(${LINKED_LIST_GTESTS} ${LINKED_LIST_GTEST_FILES})
+# target_link_libraries(${LINKED_LIST_GTESTS} gtest gtest_main)
+target_include_directories(${LINKED_LIST_GTESTS} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+add_test(NAME linked_list_gtests COMMAND ${LINKED_LIST_GTESTS})

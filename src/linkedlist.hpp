@@ -19,13 +19,14 @@ class LinkedList
 
 public:
 
+    // default constructor
     LinkedList();
 
     // copy-constructor
     LinkedList(const LinkedList& ll);
 
     void insert(const Data& data);
-    bool find(const Data& data);
+    bool find(const Data& data) const;
     void remove(const Data& data);
 
     unsigned int getLength() const;
@@ -36,8 +37,10 @@ public:
 
     bool contains(const Data& data) const;
     bool equals(const LinkedList& ll) const;
-    void print();
-    
+    void print() const;
+
+    std::string toString() const;
+ 
     // destructor
     ~LinkedList();
 };

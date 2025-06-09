@@ -8,6 +8,14 @@ namespace {
     {
         LinkedList ll{ LinkedList() };    
         
+        Data d1{ "John Doe", "12345" };
+        Data d2{ "Jane Doe", "54321" };        
+
+        ll.insert(d1);
+        EXPECT_EQ(ll.getLength(), 1);
+
+        ll.insert(d2);
+        EXPECT_EQ(ll.getLength(), 2);
     }
 
     TEST(LinkedListConstruction, DefaultConstructor)

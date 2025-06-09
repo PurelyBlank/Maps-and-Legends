@@ -12,7 +12,14 @@ class LinkedList
     {
         Data data;
         Node* next;
+
+        Node(const Data& data, Node* next = nullptr)
+            : data{ data }, next{ next }
+        {
+        }
     };
+
+    void deleteList();
 
     Node* head;
     unsigned int length;
@@ -40,7 +47,7 @@ public:
     void print() const;
 
     std::string toString() const;
- 
+
     // destructor
     ~LinkedList();
 };

@@ -12,10 +12,10 @@ namespace {
         Data d2{ "Jane Doe", "54321" };        
 
         ll.insert(d1);
-        EXPECT_EQ(ll.getLength(), 1);
+        EXPECT_EQ(1, ll.getLength());
 
         ll.insert(d2);
-        EXPECT_EQ(ll.getLength(), 2);
+        EXPECT_EQ(2, ll.getLength());
     }
 
     TEST(LinkedListFind, FindInEmptyLinkedList)
@@ -35,13 +35,13 @@ namespace {
         Data d2{ "Fred Flintstone", "cba" }; // different second field, different data
         ll.insert(d1);
 
-        EXPECT_EQ(ll.getLength(), 1);
+        EXPECT_EQ(1, ll.getLength());
         EXPECT_TRUE(ll.find(d1));
         EXPECT_FALSE(ll.find(d2));
 
         ll.insert(d2);
 
-        EXPECT_EQ(ll.getLength(), 2);
+        EXPECT_EQ(2, ll.getLength());
         EXPECT_TRUE(ll.find(d1));
         EXPECT_TRUE(ll.find(d2));
     }
@@ -49,7 +49,7 @@ namespace {
     TEST(LinkedListConstruction, DefaultConstructor)
     {
         LinkedList ll;
-        EXPECT_EQ(ll.getLength(), 0);
+        EXPECT_EQ(0, ll.getLength());
     }
 
     // TEST(LinkedListConstruction, CopyConstructor)

@@ -18,9 +18,37 @@ namespace {
         EXPECT_EQ(ll.getLength(), 2);
     }
 
+    TEST(LinkedListFind, FindInEmptyLinkedList)
+    {
+        LinkedList ll;
+           
+        Data d1{ "Mike Myers", "@MikeM" };
+
+        EXPECT_FALSE(ll.find(d1));
+    }
+
+    TEST(LinkedListFind, FindInLinkedListSizeOne)
+    {
+        LinkedList ll;
+           
+        Data d1{ "Fred Flintstone", "abc" };
+        Data d2{ "Fred Flintstone", "cba" }; // different second field, different data
+        ll.insert(d1);
+
+        EXPECT_EQ(ll.getLength(), 1);
+        EXPECT_TRUE(ll.find(d1));
+        EXPECT_FALSE(ll.find(d2));
+
+        ll.insert(d2);
+
+        EXPECT_EQ(ll.getLength(), 2);
+        EXPECT_TRUE(ll.find(d1));
+        EXPECT_TRUE(ll.find(d2));
+    }
+
     TEST(LinkedListConstruction, DefaultConstructor)
     {
-        LinkedList ll{ LinkedList() };
+        LinkedList ll;
         EXPECT_EQ(ll.getLength(), 0);
     }
 

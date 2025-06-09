@@ -19,9 +19,24 @@ void LL::insert(const Data& data)
     ++length;
 }
 
+bool LL::find(const Data& data) const
+{
+    for (Node* curr{head}; curr != nullptr; curr = curr->next) {
+        if (equals(curr->data, data))
+            return true;
+    }
+
+    return false; 
+}
+
 unsigned int LL::getLength() const
 {
     return length;
+}
+
+bool LL::equals(const Data& d1, const Data& d2) const
+{
+    return d1.username == d2.username && d1.password == d2.password;
 }
 
 void LL::deleteList()

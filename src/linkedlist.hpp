@@ -44,6 +44,7 @@ public:
 
     bool contains(const Data& data) const;
     bool equals(const LinkedList& ll) const;
+    bool equals(const Data& d1, const Data& d2) const;
     void print() const;
 
     std::string toString() const;

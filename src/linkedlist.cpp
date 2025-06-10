@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "linkedlist.hpp"
 
@@ -15,6 +16,7 @@ LL::LinkedList()
 
 void LL::insert(const Data& data)
 {
+
     head = new Node(data, head);
     ++length;
 }
@@ -67,6 +69,18 @@ unsigned int LL::getLength() const
 bool LL::equals(const Data& d1, const Data& d2) const
 {
     return d1.username == d2.username && d1.password == d2.password;
+}
+
+std::string LL::toString() const
+{
+    std::ostringstream oss;
+    // (username1, password1) -> (username2, password2) -> (username3, password3) -> NULL
+    for (Node* curr{head}; curr != nullptr; curr = curr->next) {
+        oss << "(" << curr->data.username << ", " << curr->data.password << ") -> ";
+    }
+    oss << "nullptr";
+
+    return oss.str();
 }
 
 void LL::deleteList()

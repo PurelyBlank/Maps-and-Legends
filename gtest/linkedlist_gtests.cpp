@@ -13,9 +13,11 @@ namespace {
 
         ll.insert(d1);
         EXPECT_EQ(1, ll.getLength());
+        EXPECT_EQ("(John Doe, 12345) -> nullptr", ll.toString());
 
         ll.insert(d2);
         EXPECT_EQ(2, ll.getLength());
+        EXPECT_EQ("(Jane Doe, 54321) -> (John Doe, 12345) -> nullptr", ll.toString());
     }
 
     TEST(LinkedListContains, ContainsInEmptyLinkedList)
@@ -25,6 +27,7 @@ namespace {
         Data d1{ "Mike Myers", "@MikeM" };
 
         EXPECT_FALSE(ll.contains(d1));
+        EXPECT_EQ("nullptr", ll.toString());
     }
 
     TEST(LinkedListContains, ContainsInLinkedList)
@@ -41,9 +44,11 @@ namespace {
 
         ll.insert(d2);
 
-        EXPECT_EQ(2, ll.getLength());
+        EXPECT_EQ(1, ll.getLength());
         EXPECT_TRUE(ll.contains(d1));
-        EXPECT_TRUE(ll.contains(d2));
+        EXPECT_FALSE(ll.contains(d2));
+
+        EXPECT_EQ("(Fred Flintstone, abc) -> nullptr", ll.toString());
     }
 
     TEST(LinkedListRemove, RemoveFromEmptyLinkedList)

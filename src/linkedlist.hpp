@@ -33,7 +33,8 @@ public:
     LinkedList(const LinkedList& ll);
 
     void insert(const Data& data);
-    bool find(const Data& data) const;
+    const Node* find(const Data& data) const;
+    bool contains(const Data& data) const;
     void remove(const Data& data);
 
     unsigned int getLength() const;
@@ -42,7 +43,6 @@ public:
     LinkedList& operator=(const LinkedList& ll);
     bool operator==(const LinkedList& ll) const;
 
-    bool contains(const Data& data) const;
     bool equals(const LinkedList& ll) const;
     bool equals(const Data& d1, const Data& d2) const;
     void print() const;

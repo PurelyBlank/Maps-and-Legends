@@ -18,16 +18,16 @@ namespace {
         EXPECT_EQ(2, ll.getLength());
     }
 
-    TEST(LinkedListFind, FindInEmptyLinkedList)
+    TEST(LinkedListContains, ContainsInEmptyLinkedList)
     {
         LinkedList ll;
            
         Data d1{ "Mike Myers", "@MikeM" };
 
-        EXPECT_FALSE(ll.find(d1));
+        EXPECT_FALSE(ll.contains(d1));
     }
 
-    TEST(LinkedListFind, FindInLinkedListSizeOne)
+    TEST(LinkedListContains, ContainsInLinkedList)
     {
         LinkedList ll;
            
@@ -36,14 +36,106 @@ namespace {
         ll.insert(d1);
 
         EXPECT_EQ(1, ll.getLength());
-        EXPECT_TRUE(ll.find(d1));
-        EXPECT_FALSE(ll.find(d2));
+        EXPECT_TRUE(ll.contains(d1));
+        EXPECT_FALSE(ll.contains(d2));
 
         ll.insert(d2);
 
         EXPECT_EQ(2, ll.getLength());
-        EXPECT_TRUE(ll.find(d1));
-        EXPECT_TRUE(ll.find(d2));
+        EXPECT_TRUE(ll.contains(d1));
+        EXPECT_TRUE(ll.contains(d2));
+    }
+
+    TEST(LinkedListRemove, RemoveFromEmptyLinkedList)
+    {
+        LinkedList ll;
+
+        Data d1{ "Spike Spiegal", "cowboy" };
+
+        ll.remove(d1);
+
+        EXPECT_EQ(0, ll.getLength());
+    }
+
+    TEST(LinkedListRemove, RemoveDataNotInLinkedList)
+    {
+        LinkedList ll;
+
+        Data d1{ "Nico Robin", "mil-fleur" };
+        Data d2{ "Tenno", "lotus" };
+
+        ll.insert(d1);
+        ll.remove(d2);
+
+        EXPECT_EQ(1, ll.getLength());
+        EXPECT_TRUE(ll.contains(d1));
+    }
+
+    TEST(LinkedListRemove, RemoveFirstFromLinkedList)
+    {
+        LinkedList ll;
+        
+        Data d1{ "Banshee", "Loud and Clear" };
+        Data d2{ "SCV", "SCV Ready" };
+        
+        ll.insert(d1);
+        ll.insert(d2);
+
+        ll.remove(d2); // last thing we insert into linked list is first in line (LIFO)
+                       // based on insertion algorithm
+        EXPECT_EQ(1, ll.getLength());
+
+        // Add test cases for testing data within LinkedList
+    }
+
+    TEST(LinkedListRemove, RemoveLastFromLinkedList)
+    {
+        LinkedList ll;
+        
+        Data d1{ "Banshee", "Loud and Clear" };
+        Data d2{ "SCV", "SCV Ready" };
+
+        ll.insert(d1);
+        ll.insert(d2);
+
+        ll.remove(d1); // last thing we insert into linked list is first in line (LIFO)
+                       // based on insertion algorithm
+        EXPECT_EQ(1, ll.getLength());
+
+        // Add test cases for testing data within LinkedList
+    }
+
+    TEST(LinkedListRemove, RemoveDataInLinkedList)
+    {
+        LinkedList ll;
+
+        Data d1{ "Player_1", "p1" };
+        Data d2{ "Player_2", "p2" };
+        Data d3{ "Player_3", "p3" };
+        Data d4{ "Player_4", "p4" };
+
+        ll.insert(d1);
+        ll.insert(d2);
+        ll.insert(d3);
+        ll.insert(d4);
+
+        EXPECT_EQ(4, ll.getLength());
+
+        ll.remove(d1);
+
+        EXPECT_EQ(3, ll.getLength());
+
+        ll.remove(d3);
+
+        EXPECT_EQ(2, ll.getLength());
+
+        ll.remove(d4);
+
+        EXPECT_EQ(1, ll.getLength());
+
+        ll.remove(d2);
+
+        EXPECT_EQ(0, ll.getLength());
     }
 
     TEST(LinkedListConstruction, DefaultConstructor)

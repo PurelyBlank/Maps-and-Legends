@@ -19,14 +19,44 @@ void LL::insert(const Data& data)
     ++length;
 }
 
-bool LL::find(const Data& data) const
+// disallow modification of node's internal data
+const LL::Node* LL::find(const Data& data) const
 {
     for (Node* curr{head}; curr != nullptr; curr = curr->next) {
         if (equals(curr->data, data))
-            return true;
+            return curr;
     }
 
-    return false; 
+    return nullptr; 
+}
+
+bool LL::contains(const Data& data) const
+{
+    return find(data) != nullptr;
+}
+
+void LL::remove(const Data& data)
+{
+    Node* prev{ nullptr };
+    Node* curr{ head };
+
+    for(; curr != nullptr; curr = curr->next) {
+        if (equals(curr->data, data))
+            break;
+        prev = curr;
+    }
+
+    // not in linked list
+    if (!curr)
+        return;
+
+    if (!prev) {
+        head = head->next;
+    } else {
+        prev->next = curr->next; 
+    }
+    delete curr;
+    --length;
 }
 
 unsigned int LL::getLength() const

@@ -5,18 +5,27 @@
 
 typedef LinkedList LL;
 
-
 LL::LinkedList()
     :head{ nullptr }, length{ 0 }
 {
 }
 
 // copy-constructor
-
+LL::LinkedList(const LinkedList& ll)
+{
+    for (Node* curr{ ll.head }; curr != nullptr; curr = curr->next) {
+        // The resulting linkedlist would be the reverse order,
+        // would require reversing the linkedlist
+        insert(Data{ curr->data.username, curr->data.password });
+    }
+    reverse();
+}
 
 void LL::insert(const Data& data)
 {
-
+    if (contains(data)) {
+        return;
+    } 
     head = new Node(data, head);
     ++length;
 }
@@ -25,7 +34,7 @@ void LL::insert(const Data& data)
 const LL::Node* LL::find(const Data& data) const
 {
     for (Node* curr{head}; curr != nullptr; curr = curr->next) {
-        if (equals(curr->data, data))
+        if (curr->data.username == data.username)
             return curr;
     }
 
@@ -64,6 +73,33 @@ void LL::remove(const Data& data)
 unsigned int LL::getLength() const
 {
     return length;
+}
+
+void LL::reverse()
+{
+    Node* prev{ nullptr };
+    Node* curr{ head };
+    
+    while(curr != nullptr) {
+        Node* temp{ curr->next };
+        curr->next = prev;
+        prev = curr;
+        curr = temp;
+    } 
+
+    head = prev;
+}
+
+bool LL::equals(const LinkedList& ll) const
+{
+    Node* ll_1{ head };
+    Node* ll_2{ ll.head };
+ 
+    while( ll_1 && ll_2 && equals(ll_1->data, ll_2->data)) {
+        ll_1 = ll_1->next;
+        ll_2 = ll_2->next;
+    }
+    return ll_1 == ll_2;
 }
 
 bool LL::equals(const Data& d1, const Data& d2) const

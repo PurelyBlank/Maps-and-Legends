@@ -43,6 +43,8 @@ public:
     LinkedList& operator=(const LinkedList& ll);
     bool operator==(const LinkedList& ll) const;
 
+    void reverse();
+
     bool equals(const LinkedList& ll) const;
     bool equals(const Data& d1, const Data& d2) const;
     void print() const;

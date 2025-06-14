@@ -107,6 +107,11 @@ bool LL::equals(const Data& d1, const Data& d2) const
     return d1.username == d2.username && d1.password == d2.password;
 }
 
+void LL::print() const
+{
+    std::cout << toString() << '\n';
+}   
+
 std::string LL::toString() const
 {
     std::ostringstream oss;

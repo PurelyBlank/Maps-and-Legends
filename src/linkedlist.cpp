@@ -12,6 +12,7 @@ LL::LinkedList()
 
 // copy-constructor
 LL::LinkedList(const LinkedList& ll)
+    :head{ nullptr }, length{ 0 }
 {
     for (Node* curr{ ll.head }; curr != nullptr; curr = curr->next) {
         // The resulting linkedlist would be the reverse order,

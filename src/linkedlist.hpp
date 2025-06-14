@@ -19,6 +19,8 @@ class LinkedList
         }
     };
 
+    Node* copy(const LinkedList& ll);
+    Node* reverse(Node* node);
     void deleteList();
 
     Node* head;
@@ -38,12 +40,11 @@ public:
     void remove(const Data& data);
 
     unsigned int getLength() const;
+    void reverse();
 
     // assignment operator 
     LinkedList& operator=(const LinkedList& ll);
     bool operator==(const LinkedList& ll) const;
-
-    void reverse();
 
     bool equals(const LinkedList& ll) const;
     bool equals(const Data& d1, const Data& d2) const;

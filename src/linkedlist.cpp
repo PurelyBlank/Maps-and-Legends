@@ -12,14 +12,8 @@ LL::LinkedList()
 
 // copy-constructor
 LL::LinkedList(const LinkedList& ll)
-    :head{ nullptr }, length{ 0 }
+    :head{ copy(ll) }, length{ ll.length }
 {
-    for (Node* curr{ ll.head }; curr != nullptr; curr = curr->next) {
-        // The resulting linkedlist would be the reverse order,
-        // would require reversing the linkedlist
-        insert(Data{ curr->data.username, curr->data.password });
-    }
-    reverse();
 }
 
 void LL::insert(const Data& data)
@@ -76,10 +70,30 @@ unsigned int LL::getLength() const
     return length;
 }
 
+LinkedList& LL::operator=(const LinkedList& ll)
+{
+    if (this != &ll) {
+        deleteList();
+        head = copy(ll);
+    }
+        
+    return *this;
+}
+
+bool LL::operator==(const LinkedList& ll) const
+{
+    return equals(ll);
+}
+
 void LL::reverse()
 {
+    head = reverse(head);
+}
+
+LL::Node* LL::reverse(Node* node)
+{
     Node* prev{ nullptr };
-    Node* curr{ head };
+    Node* curr{ node };
     
     while(curr != nullptr) {
         Node* temp{ curr->next };
@@ -88,7 +102,18 @@ void LL::reverse()
         curr = temp;
     } 
 
-    head = prev;
+    return prev;
+}
+
+LL::Node* LL::copy(const LinkedList& ll)
+{
+    Node* newHead{ nullptr };
+    for (Node* curr{ ll.head }; curr != nullptr; curr = curr->next) {
+        // The resulting linkedlist would be the reverse order,
+        // would require reversing the linkedlist
+        newHead = new Node(Data{ curr->data.username, curr->data.password }, newHead);
+    }
+    return reverse(newHead);
 }
 
 bool LL::equals(const LinkedList& ll) const
@@ -133,6 +158,7 @@ void LL::deleteList()
         delete curr;
         curr = temp;
     }
+    head = nullptr;
 }
 
 LL::~LinkedList()

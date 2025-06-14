@@ -227,5 +227,64 @@ namespace {
         EXPECT_TRUE(ll_2.equals(ll_1));
     }
 
+    TEST(LinkedListOperatorAssignment, AssignEmptyLinkedListToThis)
+    {
+        LinkedList emptyLL;
 
+        LinkedList ll = emptyLL;
+
+        EXPECT_TRUE(ll.equals(emptyLL));
+    }
+    
+    TEST(LinkedListOperatorAssignment, AssignLinkedListToThis)
+    {
+        LinkedList ll_1;
+        ll_1.insert(Data{"test1", "test1"});
+
+        LinkedList ll_2;
+        ll_2.insert(Data{"test2", "test2"});
+
+        ll_1 = ll_2;
+        EXPECT_TRUE(ll_1.equals(ll_2));
+    }
+
+    TEST(LinkedListOperatorEquals, TwoEmptyLinkedListComparison)
+    {
+        LinkedList ll_1;
+        LinkedList ll_2;
+
+        EXPECT_TRUE(ll_1 == ll_2);
+    }
+
+    TEST(LinkedListOperatorEquals, OneEmptyLinkedListOneNonEmptyLinkedList)
+    {
+        LinkedList emptyLL;
+        LinkedList ll_1;
+
+        ll_1.insert(Data{"test1", "test1"});
+        
+        EXPECT_FALSE(ll_1 == emptyLL); 
+    }
+
+    TEST(LinkedListOperatorEquals, TwoNonEmptyDifferentLinkedListsComparison)
+    {
+        LinkedList ll_1;
+        ll_1.insert(Data{"test1", "test1"});
+
+        LinkedList ll_2;
+        ll_2.insert(Data{"test2", "test2"});
+
+        EXPECT_FALSE(ll_1 == ll_2);
+    }
+
+    TEST(LinkedListOperatorEquals, TwoNonEmptySameLinkedListsComparison)
+    {
+        LinkedList ll_1;
+        ll_1.insert(Data{"test1", "test1"});
+
+        LinkedList ll_2;
+        ll_2.insert(Data{"test1", "test1"});
+
+        EXPECT_TRUE(ll_1 == ll_2);
+    }
 };

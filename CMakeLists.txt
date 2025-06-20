@@ -11,6 +11,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SRC_FILES_WITHOUT_MAIN
     src/linkedlist.hpp
     src/linkedlist.cpp
+    src/hashmap.hpp
+    src/hashmap.cpp
     src/constants.hpp
 )
 
@@ -45,6 +47,7 @@ set(PROJECT_CODE_FILES
 
 set(GTEST_FILES_WITHOUT_MAIN
     gtest/linkedlist_gtests.cpp
+    gtest/hashmap_gtests.cpp
 )
 
 # === All Gtests === #
@@ -71,3 +74,15 @@ add_executable(${LINKED_LIST_GTESTS} ${LINKED_LIST_GTEST_FILES})
 target_link_libraries(${LINKED_LIST_GTESTS} gtest gtest_main)
 target_include_directories(${LINKED_LIST_GTESTS} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 add_test(NAME linked_list_gtests COMMAND ${LINKED_LIST_GTESTS})
+
+# === Hash Map Gtests === #
+set(HASH_MAP_GTESTS hash_map_gtests)
+set(HASH_MAP_GTEST_FILES
+    gtest/hashmap_gtests.cpp
+    ${PROJECT_CODE_FILES}
+)
+
+add_executable(${HASH_MAP_GTESTS} ${HASH_MAP_GTEST_FILES})
+target_link_libraries(${HASH_MAP_GTESTS} gtest gtest_main)
+target_include_directories(${HASH_MAP_GTESTS} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+add_test(NAME hash_map_gtests COMMAND ${HASH_MAP_GTESTS})

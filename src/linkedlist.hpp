@@ -21,7 +21,7 @@ class LinkedList
 
     Node* copy(const LinkedList& ll);
     Node* reverse(Node* node);
-    void deleteList();
+    void deleteList() noexcept;
 
     Node* head;
     unsigned int length;
@@ -29,7 +29,7 @@ class LinkedList
 public:
 
     // default constructor
-    LinkedList();
+    LinkedList() noexcept;
 
     // copy-constructor
     LinkedList(const LinkedList& ll);
@@ -53,7 +53,7 @@ public:
     std::string toString() const;
 
     // destructor
-    ~LinkedList();
+    ~LinkedList() noexcept;
 };
 
 #endif

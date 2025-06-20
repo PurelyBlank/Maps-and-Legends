@@ -19,7 +19,7 @@ class HashMap
 public:
     
     // default constructor
-    HashMap();
+    HashMap() noexcept;
 
     // copy constructor
     HashMap(std::function<unsigned int(const std::string&)> hashFunction);
@@ -27,6 +27,8 @@ public:
     const std::string& get(const std::string& key) const;
     void insert(const std::string& key, const std::string& value);
     void remove(const std::string& key);
+
+    std::string& operator[](const std::string&);
 
     // copy assignment
     HashMap& operator=(const HashMap& map);  
@@ -38,7 +40,7 @@ public:
     std::string toString() const;
 
    // destructor 
-   ~HashMap();
+   ~HashMap() noexcept;
 };
 
 #endif

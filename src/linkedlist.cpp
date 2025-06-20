@@ -5,7 +5,7 @@
 
 typedef LinkedList LL;
 
-LL::LinkedList()
+LL::LinkedList() noexcept
     :head{ nullptr }, length{ 0 }
 {
 }
@@ -150,7 +150,7 @@ std::string LL::toString() const
     return oss.str();
 }
 
-void LL::deleteList()
+void LL::deleteList() noexcept
 {
     Node* curr{ head };
     while (curr != nullptr) {
@@ -161,7 +161,7 @@ void LL::deleteList()
     head = nullptr;
 }
 
-LL::~LinkedList()
+LL::~LinkedList() noexcept
 {
     deleteList();
 }

@@ -10,10 +10,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # === Source Files === #
 set(SRC_FILES_WITHOUT_MAIN
     src/linkedlist.hpp
-    src/linkedlist.cpp
     src/hashmap.hpp
-    src/hashmap.cpp
-    src/constants.hpp
+    src/user.hpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES_WITHOUT_MAIN} src/main.cpp)

@@ -1,15 +1,19 @@
 #include <gtest/gtest.h>
+#include <string>
+#include <vector>
+
 #include "linkedlist.hpp"
+#include "user.hpp"
 
 
 namespace {
     
     TEST(LinkedListInsert, InsertNodes)
     {
-        LinkedList ll{ LinkedList() };    
+        LinkedList<User> ll;
         
-        Data d1{ "John Doe", "12345" };
-        Data d2{ "Jane Doe", "54321" };        
+        User d1{ "John Doe", "12345" };
+        User d2{ "Jane Doe", "54321" };        
 
         ll.insert(d1);
         EXPECT_EQ(1, ll.getLength());
@@ -20,11 +24,36 @@ namespace {
         EXPECT_EQ("(Jane Doe, 54321) -> (John Doe, 12345) -> nullptr", ll.toString());
     }
 
+    TEST(LinkedListInsertTest, InsertMultipleElements) {
+        LinkedList<std::string> llStr;
+        
+        std::string output;
+
+        int numIters{ 100 };
+        for (int i{0}; i <= numIters; ++i) {
+            llStr.insert(std::to_string(i));
+            output += "(" + std::to_string(numIters - i) + ") -> ";
+        }
+        output += "nullptr";
+
+        EXPECT_EQ(output, llStr.toString());
+    }
+
+    TEST(LinkedListInsertTest, InsertDuplicates) {
+        LinkedList<std::string> llStr;
+        llStr.insert("hello");
+        llStr.insert("world");
+        llStr.insert("hello"); // Duplicate
+        llStr.insert("again");
+    
+        EXPECT_EQ("(again) -> (world) -> (hello) -> nullptr", llStr.toString());
+    }
+
     TEST(LinkedListContains, ContainsInEmptyLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
            
-        Data d1{ "Mike Myers", "@MikeM" };
+        User d1{ "Mike Myers", "@MikeM" };
 
         EXPECT_FALSE(ll.contains(d1));
         EXPECT_EQ("nullptr", ll.toString());
@@ -32,10 +61,11 @@ namespace {
 
     TEST(LinkedListContains, ContainsInLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
            
-        Data d1{ "Fred Flintstone", "abc" };
-        Data d2{ "Fred Flintstone", "cba" }; // different second field, different data
+        User d1{ "Fred Flintstone", "abc" };
+        // different second field, different data
+        User d2{ "Fred Flintstone", "cba" }; 
         ll.insert(d1);
 
         EXPECT_EQ(1, ll.getLength());
@@ -43,17 +73,34 @@ namespace {
 
         ll.insert(d2);
 
-        EXPECT_EQ(1, ll.getLength());
+        EXPECT_EQ(2, ll.getLength());
         EXPECT_TRUE(ll.contains(d1));
 
-        EXPECT_EQ("(Fred Flintstone, abc) -> nullptr", ll.toString());
+        EXPECT_EQ("(Fred Flintstone, cba) -> (Fred Flintstone, abc) -> nullptr", ll.toString());
+    }
+
+    TEST(LinkedListContains, ContainsInEmptyDoubleList) {
+        LinkedList<double> ll;
+        EXPECT_FALSE(ll.contains(3.14));
+        EXPECT_EQ("nullptr", ll.toString());
+    }
+
+    TEST(LinkedListContains, ContainsExistingDoubleElement) {
+        LinkedList<double> ll;
+        ll.insert(1.1); // List: (1.1) -> nullptr
+        ll.insert(2.2); // List: (2.2) -> (1.1) -> nullptr
+        ll.insert(3.3); // List: (3.3) -> (2.2) -> (1.1) -> nullptr
+    
+        EXPECT_TRUE(ll.contains(3.3)); // Head
+        EXPECT_TRUE(ll.contains(2.2));
+        EXPECT_TRUE(ll.contains(1.1));
     }
 
     TEST(LinkedListRemove, RemoveFromEmptyLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Spike Spiegal", "cowboy" };
+        User d1{ "Spike Spiegal", "cowboy" };
 
         ll.remove(d1);
 
@@ -61,12 +108,12 @@ namespace {
         EXPECT_EQ("nullptr", ll.toString());
     }
 
-    TEST(LinkedListRemove, RemoveDataNotInLinkedList)
+    TEST(LinkedListRemove, RemoveUserNotInLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Nico Robin", "mil-fleur" };
-        Data d2{ "Tenno", "lotus" };
+        User d1{ "Nico Robin", "mil-fleur" };
+        User d2{ "Tenno", "lotus" };
 
         ll.insert(d1);
         ll.remove(d2);
@@ -78,10 +125,10 @@ namespace {
 
     TEST(LinkedListRemove, RemoveFirstFromLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
         
-        Data d1{ "Banshee", "Loud and Clear" };
-        Data d2{ "SCV", "SCV Ready" };
+        User d1{ "Banshee", "Loud and Clear" };
+        User d2{ "SCV", "SCV Ready" };
         
         ll.insert(d1);
         ll.insert(d2);
@@ -97,10 +144,10 @@ namespace {
 
     TEST(LinkedListRemove, RemoveLastFromLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
         
-        Data d1{ "Banshee", "Loud and Clear" };
-        Data d2{ "SCV", "SCV Ready" };
+        User d1{ "Banshee", "Loud and Clear" };
+        User d2{ "SCV", "SCV Ready" };
 
         ll.insert(d1);
         ll.insert(d2);
@@ -114,14 +161,14 @@ namespace {
         EXPECT_EQ("(SCV, SCV Ready) -> nullptr", ll.toString());
     }
 
-    TEST(LinkedListRemove, RemoveDataInLinkedList)
+    TEST(LinkedListRemove, RemoveUserInLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Player_1", "p1" };
-        Data d2{ "Player_2", "p2" };
-        Data d3{ "Player_3", "p3" };
-        Data d4{ "Player_4", "p4" };
+        User d1{ "Player_1", "p1" };
+        User d2{ "Player_2", "p2" };
+        User d3{ "Player_3", "p3" };
+        User d4{ "Player_4", "p4" };
 
         ll.insert(d1);
         ll.insert(d2);
@@ -155,7 +202,7 @@ namespace {
     
     TEST(ReverseLinkedList, ReverseEmptyLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
         ll.reverse();
 
         EXPECT_EQ("nullptr", ll.toString());
@@ -163,9 +210,9 @@ namespace {
 
     TEST(ReverseLinkedList, ReverseLinkedListSizeOne)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Player_1", "p1" };
+        User d1{ "Player_1", "p1" };
 
         ll.insert(d1);
         ll.reverse();
@@ -175,10 +222,10 @@ namespace {
 
     TEST(ReverseLinkedList, ReverseLinkedListSizeTwo)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Player_1", "p1" };
-        Data d2{ "Player_2", "p2" };
+        User d1{ "Player_1", "p1" };
+        User d2{ "Player_2", "p2" };
 
         ll.insert(d1);
         ll.insert(d2);
@@ -190,12 +237,12 @@ namespace {
 
     TEST(ReverseLinkedList, ReverseLinkedList)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
 
-        Data d1{ "Player_1", "p1" };
-        Data d2{ "Player_2", "p2" };
-        Data d3{ "Player_3", "p3" };
-        Data d4{ "Player_4", "p4" };
+        User d1{ "Player_1", "p1" };
+        User d2{ "Player_2", "p2" };
+        User d3{ "Player_3", "p3" };
+        User d4{ "Player_4", "p4" };
 
         ll.insert(d1);
         ll.insert(d2);
@@ -210,39 +257,51 @@ namespace {
 
     TEST(LinkedListConstruction, DefaultConstructor)
     {
-        LinkedList ll;
+        LinkedList<User> ll;
         EXPECT_EQ(0, ll.getLength());
         EXPECT_EQ("nullptr", ll.toString());
     }
 
     TEST(LinkedListConstruction, CopyConstructor)
     {
-        LinkedList ll_1;
-        ll_1.insert(Data{"test1", "test1"});
-        ll_1.insert(Data{"test2", "test2"});
+        LinkedList<User> ll_1;
+        ll_1.insert(User{"test1", "test1"});
+        ll_1.insert(User{"test2", "test2"});
 
-        LinkedList ll_2{ ll_1 };
+        LinkedList<User> ll_2{ ll_1 };
         EXPECT_EQ(ll_2.getLength(), 2);
         EXPECT_EQ(ll_1.toString(), ll_2.toString());
         EXPECT_TRUE(ll_2.equals(ll_1));
     }
 
+    TEST(LinkedListConstruction, CopyConstructorEmptyLinkedList)
+    {
+        LinkedList<User> emptyLL;
+        LinkedList<User> ll = emptyLL;
+
+        EXPECT_TRUE(ll.equals(emptyLL));
+    }
+
     TEST(LinkedListOperatorAssignment, AssignEmptyLinkedListToThis)
     {
-        LinkedList emptyLL;
+        LinkedList<User> emptyLL;
 
-        LinkedList ll = emptyLL;
+        LinkedList<User> ll;
+        ll.insert(User{"p1", "p1"});
 
+        ll = emptyLL;
+        
+        EXPECT_EQ(ll.getLength(), 0);
         EXPECT_TRUE(ll.equals(emptyLL));
     }
     
     TEST(LinkedListOperatorAssignment, AssignLinkedListToThis)
     {
-        LinkedList ll_1;
-        ll_1.insert(Data{"test1", "test1"});
+        LinkedList<User> ll_1;
+        ll_1.insert(User{"test1", "test1"});
 
-        LinkedList ll_2;
-        ll_2.insert(Data{"test2", "test2"});
+        LinkedList<User> ll_2;
+        ll_2.insert(User{"test2", "test2"});
 
         ll_1 = ll_2;
         EXPECT_TRUE(ll_1.equals(ll_2));
@@ -250,40 +309,40 @@ namespace {
 
     TEST(LinkedListOperatorEquals, TwoEmptyLinkedListComparison)
     {
-        LinkedList ll_1;
-        LinkedList ll_2;
+        LinkedList<User> ll_1;
+        LinkedList<User> ll_2;
 
         EXPECT_TRUE(ll_1 == ll_2);
     }
 
     TEST(LinkedListOperatorEquals, OneEmptyLinkedListOneNonEmptyLinkedList)
     {
-        LinkedList emptyLL;
-        LinkedList ll_1;
+        LinkedList<User> emptyLL;
+        LinkedList<User> ll_1;
 
-        ll_1.insert(Data{"test1", "test1"});
+        ll_1.insert(User{"test1", "test1"});
         
         EXPECT_FALSE(ll_1 == emptyLL); 
     }
 
     TEST(LinkedListOperatorEquals, TwoNonEmptyDifferentLinkedListsComparison)
     {
-        LinkedList ll_1;
-        ll_1.insert(Data{"test1", "test1"});
+        LinkedList<User> ll_1;
+        ll_1.insert(User{"test1", "test1"});
 
-        LinkedList ll_2;
-        ll_2.insert(Data{"test2", "test2"});
+        LinkedList<User> ll_2;
+        ll_2.insert(User{"test2", "test2"});
 
         EXPECT_FALSE(ll_1 == ll_2);
     }
 
     TEST(LinkedListOperatorEquals, TwoNonEmptySameLinkedListsComparison)
     {
-        LinkedList ll_1;
-        ll_1.insert(Data{"test1", "test1"});
+        LinkedList<User> ll_1;
+        ll_1.insert(User{"test1", "test1"});
 
-        LinkedList ll_2;
-        ll_2.insert(Data{"test1", "test1"});
+        LinkedList<User> ll_2;
+        ll_2.insert(User{"test1", "test1"});
 
         EXPECT_TRUE(ll_1 == ll_2);
     }

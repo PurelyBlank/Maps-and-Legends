@@ -6,12 +6,13 @@
 
 #include "linkedlist.hpp"
 
+template <typename DataType>
 class HashMap
 {
     static constexpr double loadFactor{ 0.8 };
 
     unsigned int numBuckets;
-    LinkedList** map;
+    LinkedList<DataType>** map;
 
     std::function<unsigned int(const std::string&)>hashFunction;
 

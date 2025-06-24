@@ -1,5 +1,5 @@
-#ifndef HASHMAP_HPP
-#define HASHMAP_HPP
+#ifndef HASHTABLE_HPP
+#define HASHTABLE_HPP
 
 #include <iostream>
 #include <sstream>
@@ -8,9 +8,9 @@
 #include "linkedlist.hpp"
 
 template <typename KeyType, typename DataType>
-// DataType synonymous with a hashmaps value
+// DataType synonymous with a hashtables value
 
-class HashMap
+class HashTable
 {
     static constexpr double loadFactor{ 0.8 };
 
@@ -25,10 +25,10 @@ class HashMap
 public:
     
     // default constructor
-    HashMap() noexcept;
+    HashTable() noexcept;
 
     // copy constructor
-    HashMap(std::function<unsigned int(const KeyType&)> hashFunction);
+    HashTable(std::function<unsigned int(const KeyType&)> hashFunction);
 
     const DataType& get(const KeyType& key) const;
     void insert(const KeyType& key, const DataType& value);
@@ -38,21 +38,21 @@ public:
     const DataType& operator[](const KeyType&) const;
 
     // copy assignment
-    HashMap& operator=(const HashMap& map);
-    bool operator==(const HashMap& map) const;
+    HashTable& operator=(const HashTable& map);
+    bool operator==(const HashTable& map) const;
 
-    bool equals(const HashMap& map) const;
+    bool equals(const HashTable& map) const;
     void print() const;
 
     std::string toString() const;
 
    // destructor 
-   ~HashMap() noexcept;
+   ~HashTable() noexcept;
 };
 
 
 template <typename KeyType, typename DataType>
-HashMap<KeyType, DataType>::HashMap() noexcept
+HashTable<KeyType, DataType>::HashTable() noexcept
     : numBuckets{ 10 }
 {
     map = new LinkedList<DataType>*[numBuckets];
@@ -64,7 +64,7 @@ HashMap<KeyType, DataType>::HashMap() noexcept
 
 
 template <typename KeyType, typename DataType>
-std::string HashMap<KeyType, DataType>::toString() const
+std::string HashTable<KeyType, DataType>::toString() const
 {
     std::ostringstream oss;
     for (unsigned int i{ 0 }; i < numBuckets; ++i) {
@@ -75,7 +75,7 @@ std::string HashMap<KeyType, DataType>::toString() const
 }
 
 template <typename KeyType, typename DataType>
-void HashMap<KeyType, DataType>::deleteMap() noexcept
+void HashTable<KeyType, DataType>::deleteMap() noexcept
 {
     if (map == nullptr)
         return;
@@ -89,7 +89,7 @@ void HashMap<KeyType, DataType>::deleteMap() noexcept
 }
 
 template <typename KeyType, typename DataType>
-HashMap<KeyType, DataType>::~HashMap() noexcept
+HashTable<KeyType, DataType>::~HashTable() noexcept
 {
     deleteMap(); 
 }

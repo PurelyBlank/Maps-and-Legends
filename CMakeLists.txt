@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # === Source Files === #
 set(SRC_FILES_WITHOUT_MAIN
     src/linkedlist.hpp
-    src/hashmap.hpp
+    src/hashtable.hpp
     src/user.hpp
 )
 
@@ -45,7 +45,7 @@ set(PROJECT_CODE_FILES
 
 set(GTEST_FILES_WITHOUT_MAIN
     gtest/linkedlist_gtests.cpp
-    gtest/hashmap_gtests.cpp
+    gtest/hashtable_gtests.cpp
 )
 
 # === All Gtests === #
@@ -76,7 +76,7 @@ add_test(NAME linked_list_gtests COMMAND ${LINKED_LIST_GTESTS})
 # === Hash Map Gtests === #
 set(HASH_MAP_GTESTS hash_map_gtests)
 set(HASH_MAP_GTEST_FILES
-    gtest/hashmap_gtests.cpp
+    gtest/hashtable_gtests.cpp
     ${PROJECT_CODE_FILES}
 )
 

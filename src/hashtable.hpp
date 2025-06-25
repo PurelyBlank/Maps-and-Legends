@@ -19,21 +19,18 @@ class HashTable
 
     std::function<unsigned int(const KeyType&)>hashFunction;
 
+    void defaultHashFunction();
+    void constructHashMap();
     void deleteMap() noexcept;
     void rehash();
 
 public:
     
     // default constructor
-    HashTable() noexcept;
+    HashTable();
 
     // copy constructor
     HashTable(std::function<unsigned int(const KeyType&)> hashFunction);
-
-    unsigned int defaultHashFunction(const KeyType& key)
-    {
-        return 0;
-    }
 
     const DataType& get(const KeyType& key) const;
     void insert(const KeyType& key, const DataType& value);
@@ -57,8 +54,14 @@ public:
 
 
 template <typename KeyType, typename DataType>
-HashTable<KeyType, DataType>::HashTable() noexcept
+HashTable<KeyType, DataType>::HashTable()
     : numBuckets{ 10 }
+{
+    constructHashMap();
+}
+
+template <typename KeyType, typename DataType>
+void HashTable<KeyType, DataType>::constructHashMap()
 {
     map = new LinkedList<DataType>*[numBuckets];
 
@@ -66,7 +69,6 @@ HashTable<KeyType, DataType>::HashTable() noexcept
         map[i] = new LinkedList<DataType>();
     }
 }
-
 
 template <typename KeyType, typename DataType>
 std::string HashTable<KeyType, DataType>::toString() const

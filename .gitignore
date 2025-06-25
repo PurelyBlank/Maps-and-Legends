@@ -1,1 +1,6 @@
+# CMake
 /build
+
+# CLion IDE
+/.idea
+/cmake-build-debug

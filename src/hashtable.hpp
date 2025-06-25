@@ -30,6 +30,11 @@ public:
     // copy constructor
     HashTable(std::function<unsigned int(const KeyType&)> hashFunction);
 
+    unsigned int defaultHashFunction(const KeyType& key)
+    {
+        return 0;
+    }
+
     const DataType& get(const KeyType& key) const;
     void insert(const KeyType& key, const DataType& value);
     void remove(const KeyType& key);
@@ -68,7 +73,7 @@ std::string HashTable<KeyType, DataType>::toString() const
 {
     std::ostringstream oss;
     for (unsigned int i{ 0 }; i < numBuckets; ++i) {
-        // TODO
+        oss << map[i]->toString() << '\n';
     }
 
     return oss.str();
